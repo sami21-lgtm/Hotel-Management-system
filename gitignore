@@ -1,1 +1,11 @@
+import os
 
+def check_config():
+    for f in ['.gitignore', '.env']:
+        if os.path.isfile(f):
+            print(f"{f} exists.")
+        else:
+            print(f"{f} is missing.")
+
+if __name__ == "__main__":
+    check_config()
