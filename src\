@@ -1,1 +1,14 @@
+import os
 
+def check_source_code():
+    found = []
+    for folder in ['backend', 'src', 'frontend']:
+        if os.path.isdir(folder):
+            found.append(folder + "/")
+    if found:
+        print("Found source code folders:", ", ".join(found))
+    else:
+        print("No source code folders found (backend/, src/, frontend/).")
+
+if __name__ == "__main__":
+    check_source_code()
