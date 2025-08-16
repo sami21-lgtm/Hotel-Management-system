@@ -1,1 +1,12 @@
+import os
 
+def check_dependencies():
+    if os.path.isfile('requirements.txt'):
+        print("requirements.txt exists.")
+    elif os.path.isfile('package.json'):
+        print("package.json exists.")
+    else:
+        print("No dependency file found (requirements.txt or package.json).")
+
+if __name__ == "__main__":
+    check_dependencies()
