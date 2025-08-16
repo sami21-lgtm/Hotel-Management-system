@@ -1,15 +1,47 @@
-import os
+-- Hotel Management System Database Schema
 
-def check_project_dirs():
-    for folder in ['migrations', 'static', 'templates', 'tests']:
-        if os.path.isdir(folder):
-            print(f"{folder}/ folder exists.")
-        else:
-            print(f"{folder}/ folder is missing.")
-    if os.path.isfile('hotel.db'):
-        print("hotel.db file exists. (optional)")
-    else:
-        print("hotel.db file is missing. (optional)")
+CREATE TABLE guests (
+    guest_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(20),
+    address TEXT
+);
 
-if __name__ == "__main__":
-    check_project_dirs()
+CREATE TABLE rooms (
+    room_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    room_number VARCHAR(10) NOT NULL UNIQUE,
+    type VARCHAR(50),
+    price DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'available'
+);
+
+CREATE TABLE bookings (
+    booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guest_id INTEGER,
+    room_id INTEGER,
+    check_in DATE NOT NULL,
+    check_out DATE NOT NULL,
+    booking_date DATE DEFAULT CURRENT_DATE,
+    status VARCHAR(20) DEFAULT 'booked',
+    FOREIGN KEY (guest_id) REFERENCES guests(guest_id),
+    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+
+CREATE TABLE staff (
+    staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(20)
+);
+
+CREATE TABLE payments (
+    payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    booking_id INTEGER,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_date DATE DEFAULT CURRENT_DATE,
+    payment_method VARCHAR(50),
+    status VARCHAR(20) DEFAULT 'paid',
+    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
+);
